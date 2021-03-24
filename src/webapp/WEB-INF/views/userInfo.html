@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="/logout">
+    <input type="submit" value="Выйти из системы">
+</form>
+<table border="2">
+    <caption th:text="${'Информация о пользоваетеле - ' + user.getName()}"></caption>
+    <tr>
+        <td>Возраст</td> <td th:text="${user.getAge()}"></td>
+    </tr>
+    <tr>
+        <td>Телефон</td> <td th:text="${user.getPhone()}"></td>
+    </tr>
+    <tr>
+        <td>Роли</td> <td th:text="${user.getRolesString()}"></td>
+    </tr>
+</table>
+</body>
+</html>

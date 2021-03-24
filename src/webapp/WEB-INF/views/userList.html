@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="/logout">
+    <input type="submit" value="Выйти из системы">
+</form>
+<br>
+<div>
+    <table border="2">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Age</th>
+            <th>Phone</th>
+            <th>Roles</th>
+        </tr>
+        <tr th:each="user, index : ${users}">
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getName()}"></td>
+            <td th:text="${user.getPassword()}"></td>
+            <td th:text="${user.getAge()}"></td>
+            <td th:text="${user.getPhone()}"></td>
+            <td th:text="${user.getRolesString()}"></td>
+            <td>
+                <a th:href="@{/admin/users/delete/{id}(id = ${user.getId()})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <H3>Добавить пользователя</H3>
+    <form th:method="POST" th:action="@{/admin/users}" th:object="${new_user}">
+        <p><label for="name">Имя пользователя: </label>
+            <input type="text" th:field="*{name}" id="name"/></p>
+        <p><label for="pass">Пароль: </label>
+            <input type="text" th:field="*{password}" id="pass"/></p>
+        <p><label for="age">Возраст: </label>
+            <input type="number" th:field="*{age}" id="age"/></p>
+        <p><label for="phone">Телефон </label>
+            <input type="number" th:field="*{phone}" id="phone"/></p>
+        <label for="roles">Роли:</label>
+        <select name="userRoles" id="roles" multiple>
+            <option th:each="role : ${roles_list}"
+                    th:value="${role}"
+                    th:text="${role.getRole()}">
+            </option>
+        </select>
+
+        <p><input type="submit" value="Добавить"></p>
+    </form>
+    <br>
+    <h4>Изменить пользователя :</h4>
+    <form action="/admin/users/update" th:method="PATCH">
+        <label for="uId">ID пользователя</label>
+        <input type="text" name="userId" id="uId" required>
+        <br>
+        <label for="uName">Новое имя: </label>
+        <input type="text" name="newName" id="uName">
+        <br>
+        <label for="uPass">Новый пароль: </label>
+        <input type="text" name="newPassword" id="uPass">
+        <br>
+        <label for="uAge">Новый возраст:</label>
+        <input type="number" name="newAge" id="uAge">
+        <br>
+        <label for="uPhone">Новый телефон:</label>
+        <input type="number" name="newPhone" id="uPhone">
+        <br>
+        <label for="uRoles">Роли:</label>
+        <select name="newRoles" id="uRoles" multiple>
+            <option th:each="role : ${roles_list}"
+                    th:value="${role}"
+                    th:text="${role.getRole()}">
+            </option>
+        </select>
+        <p><input type="submit" value="Изменить!"></p>
+    </form>
+</div>
+</body>
+</html>
